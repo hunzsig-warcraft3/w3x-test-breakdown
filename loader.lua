@@ -116,3 +116,8 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     end)
 
 end)
+
+htime.setInterval(5.00, function()
+    collectgarbage("collect")
+    print_mb("========内存回收->" .. collectgarbage("count"))
+end)
