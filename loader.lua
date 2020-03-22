@@ -63,14 +63,14 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
             print_mb("========" .. types[type] .. "测试结束========")
             return
         end
-        local x = math.random(0, 500)
-        local y = math.random(0, 500)
+        local x = math.random(0, 1000)
+        local y = math.random(0, 1000)
         if (type == "unit") then
             --测试创建单位
             henemy.create({
                 unitId = "hfoo",
-                x = math.random(0, 500),
-                y = math.random(0, 500),
+                x = x,
+                y = y,
                 during = during,
             })
         elseif (type == "texttag") then
@@ -109,8 +109,8 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
             )
         elseif (type == "timer") then
             --测试计时器
-            htime.setTimeout(math.random(1, 50), function(t)
-                htime.delTimer(t)
+            htime.setTimeout(math.random(1, 50), function(tt)
+                htime.delTimer(tt)
             end)
         end
     end)
