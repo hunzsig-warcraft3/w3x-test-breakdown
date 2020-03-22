@@ -116,7 +116,3 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     end)
 
 end)
-
-htime.setInterval(5.00, function()
-    print_r(hRuntime.unit, print, false)
-end)
