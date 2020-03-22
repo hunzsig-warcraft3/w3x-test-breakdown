@@ -51,7 +51,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     }) == false) then
         return
     end
-    print_mb("========" .. types[type] .. "测试开始========")
+    print_mb("========" .. types[type] .. "测试开始，内存" .. collectgarbage("count") .. "========")
     local n = 0
     htime.setInterval(frequency, function(t)
         n = n + 1
@@ -60,7 +60,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         end
         if (n > number) then
             htime.delTimer(t)
-            print_mb("========" .. types[type] .. "测试结束========")
+            print_mb("========" .. types[type] .. "测试结束，内存" .. collectgarbage("count") .. "========")
             return
         end
         local x = math.random(0, 1000)
