@@ -64,6 +64,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         .. "\n->内存:" .. collectgarbage("count")
         .. "\n========")
     local n = 0
+    local cache = {}
     htime.setInterval(frequency, function(t)
         n = n + 1
         if (n % 1000 == 0) then
@@ -72,12 +73,14 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         if (n > number) then
             htime.delTimer(t)
             print_mb("========" .. types[type] .. "测试结束，内存" .. collectgarbage("count") .. "========")
+            cache = {}
             return
         end
         local x = math.random(0, 1000)
         local y = math.random(0, 1000)
         if (type == "var") then
-            --测试变量清空
+            --测试全局/局部变量清空
+            cache[n] = x + y
             var_text[n] = x + y
             var_text[n] = nil
         elseif (type == "unit") then
@@ -136,4 +139,5 @@ end)
 htime.setInterval(5.00, function()
     collectgarbage("collect")
     print_mb("========内存回收->" .. collectgarbage("count"))
+    print_mb("========hRuntime.unit->" .. table.len(hRuntime.unit))
 end)
