@@ -43,9 +43,9 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     local chatString = evtData.chatString
     local chatOptions = string.explode(' ', chatString)
     local type = string.gsub(chatOptions[1] or "", "-", "")
-    local frequency = tonumber(chatOptions[2] or 0.1)
-    local number = tonumber(chatOptions[3] or 10000)
-    local during = tonumber(chatOptions[4] or 3)
+    local frequency = tonumber(chatOptions[2]) or 0.05
+    local number = tonumber(chatOptions[3]) or 10000
+    local during = tonumber(chatOptions[4]) or 3
     if (type == "" or table.includes(type, {
         "var",
         "unit",
