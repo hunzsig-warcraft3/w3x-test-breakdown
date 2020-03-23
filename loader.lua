@@ -6,12 +6,15 @@ cj.FogEnable(false)
 cj.FogMaskEnable(false)
 
 types = {
+    var = "变量清空",
     unit = "创建单位",
     texttag = "创建飘浮字",
     ttgstyle = "创建带缩放漂浮字",
     effect = "创建特效",
     timer = "创建计时器",
 }
+
+var_text = {}
 
 henemy.setPlayers({
     hplayer.players[2],
@@ -29,6 +32,7 @@ henemy.setPlayers({
 
 --[[
     测试例子，进入游戏，敲入聊天信息
+    -var [frequency] [number]
     -unit [frequency] [number] [during]
     -texttag [frequency] [number] [during]
     -ttgstyle [frequency] [number] [during]
@@ -43,6 +47,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     local number = tonumber(chatOptions[3] or 10000)
     local during = tonumber(chatOptions[4] or 3)
     if (type == "" or table.includes(type, {
+        "var",
         "unit",
         "texttag",
         "ttgstyle",
@@ -51,12 +56,18 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     }) == false) then
         return
     end
-    print_mb("========" .. types[type] .. "测试开始，内存" .. collectgarbage("count") .. "========")
+    print_mb("========测试开始"
+        .. "\n->type:" .. types[type]
+        .. "\n->frequency:" .. frequency
+        .. "\n->number:" .. number
+        .. "\n->during:" .. during
+        .. "\n->内存:" .. collectgarbage("count")
+        .. "\n========")
     local n = 0
     htime.setInterval(frequency, function(t)
         n = n + 1
         if (n % 1000 == 0) then
-            print_mb("=======>" .. types[type] .. n .. "次")
+            print_mb("====== = >" .. types[type] .. n .. "次")
         end
         if (n > number) then
             htime.delTimer(t)
@@ -65,7 +76,11 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         end
         local x = math.random(0, 1000)
         local y = math.random(0, 1000)
-        if (type == "unit") then
+        if (type == "var") then
+            --测试变量清空
+            var_text[n] = x + y
+            var_text[n] = nil
+        elseif (type == "unit") then
             --测试创建单位
             henemy.create({
                 unitId = "hfoo",
@@ -109,6 +124,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
             )
         elseif (type == "timer") then
             --测试计时器
+            --每个占用 0.1764KB 左右，上限不变则不再增加
             htime.setTimeout(math.random(1, 50), function(tt)
                 htime.delTimer(tt)
             end)
