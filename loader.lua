@@ -84,15 +84,24 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
             var_text[n] = x + y
             var_text[n] = nil
         elseif (type == "unit") then
-            --测试创建单位
-            henemy.create({
-                unitId = "hfoo",
-                x = x,
-                y = y,
-                during = during,
-            })
+            --测试创建单位，成绩：50W
+            local u = cj.CreateUnit(
+                henemy.getPlayer(),
+                string.char2id("hfoo"),
+                x,
+                y,
+                0
+            )
+            hunit.del(u, during)
+            --测试创建单位2，成绩：23W
+            --henemy.create({
+            --    unitId = "hfoo",
+            --    x = x,
+            --    y = y,
+            --    during = during,
+            --})
         elseif (type == "texttag") then
-            --测试飘浮字
+            --测试飘浮字，成绩：?W
             htextTag.create2XY(
                 x, y,
                 math.random(0, 100),
@@ -103,7 +112,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                 math.random(0, 50)
             )
         elseif (type == "ttgstyle") then
-            --测试飘浮字
+            --测试飘浮字，成绩：?W
             htextTag.style(
                 htextTag.create2XY(
                     x, y,
@@ -119,14 +128,14 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                 10
             )
         elseif (type == "effect") then
-            --测试特效
+            --测试特效，成绩：?W
             heffect.toXY(
                 "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
                 x, y,
                 during
             )
         elseif (type == "timer") then
-            --测试计时器
+            --测试计时器，成绩：?W
             --每个占用 0.1764KB 左右，上限不变则不再增加
             htime.setTimeout(math.random(1, 50), function(tt)
                 htime.delTimer(tt)
