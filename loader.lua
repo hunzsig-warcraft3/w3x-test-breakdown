@@ -32,20 +32,21 @@ henemy.setPlayers({
 
 --[[
     测试例子，进入游戏，敲入聊天信息
-    -var [frequency] [number]
-    -unit [frequency] [number] [during]
-    -texttag [frequency] [number] [during]
-    -ttgstyle [frequency] [number] [during]
-    -effect [frequency] [number] [during]
-    -timer [frequency] [number] [during]
+    -var [concurrent] [frequency] [number]
+    -unit [concurrent] [frequency] [number] [during]
+    -texttag [concurrent] [frequency] [number] [during]
+    -ttgstyle [concurrent] [frequency] [number] [during]
+    -effect [concurrent] [frequency] [number] [during]
+    -timer [concurrent] [frequency] [number] [during]
 ]]
 hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     local chatString = evtData.chatString
     local chatOptions = string.explode(' ', chatString)
     local type = string.gsub(chatOptions[1] or "", "-", "")
-    local frequency = tonumber(chatOptions[2]) or 0.05
-    local number = tonumber(chatOptions[3]) or 10000
-    local during = tonumber(chatOptions[4]) or 3
+    local concurrent = tonumber(chatOptions[2]) or 1
+    local frequency = tonumber(chatOptions[3]) or 0.01
+    local number = tonumber(chatOptions[4]) or 10000
+    local during = tonumber(chatOptions[5]) or 3
     if (type == "" or table.includes(type, {
         "var",
         "unit",
@@ -58,6 +59,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
     end
     print_mb("========测试开始"
         .. "\n->type:" .. types[type]
+        .. "\n->concurrent:" .. concurrent
         .. "\n->frequency:" .. frequency
         .. "\n->number:" .. number
         .. "\n->during:" .. during
@@ -65,84 +67,91 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         .. "\n========")
     local n = 0
     local cache = {}
-    htime.setInterval(frequency, function(t)
-        n = n + 1
-        if (n % 1000 == 0) then
-            print_mb("====== = >" .. types[type] .. n .. "次")
-        end
-        if (n > number) then
-            htime.delTimer(t)
-            print_mb("========" .. types[type] .. "测试结束，内存" .. collectgarbage("count") .. "========")
-            cache = {}
-            return
-        end
-        local x = math.random(0, 1000)
-        local y = math.random(0, 1000)
-        if (type == "var") then
-            --测试全局/局部变量清空
-            cache[n] = x + y
-            var_text[n] = x + y
-            var_text[n] = nil
-        elseif (type == "unit") then
-            --测试创建单位，成绩：50W
-            local u = cj.CreateUnit(
-                henemy.getPlayer(),
-                string.char2id("hfoo"),
-                x,
-                y,
-                0
-            )
-            hunit.del(u, during)
-            --测试创建单位2，成绩：23W
-            --henemy.create({
-            --    unitId = "hfoo",
-            --    x = x,
-            --    y = y,
-            --    during = during,
-            --})
-        elseif (type == "texttag") then
-            --测试飘浮字，成绩：?W
-            htextTag.create2XY(
-                x, y,
-                math.random(0, 100),
-                math.random(5, 10),
-                nil,
-                1,
-                during,
-                math.random(0, 50)
-            )
-        elseif (type == "ttgstyle") then
-            --测试飘浮字，成绩：?W
-            htextTag.style(
-                htextTag.create2XY(
-                    x, y,
-                    math.random(0, 100),
-                    math.random(5, 10),
-                    nil,
-                    1,
-                    during,
-                    math.random(0, 50)
-                ),
-                'toggle',
-                10,
-                10
-            )
-        elseif (type == "effect") then
-            --测试特效，成绩：?W
-            heffect.toXY(
-                "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
-                x, y,
-                during
-            )
-        elseif (type == "timer") then
-            --测试计时器，成绩：?W
-            --每个占用 0.1764KB 左右，上限不变则不再增加
-            htime.setTimeout(math.random(1, 50), function(tt)
-                htime.delTimer(tt)
-            end)
-        end
-    end)
-
+    for _ = 1, concurrent do
+        local t = cj.CreateTimer()
+        cj.TimerStart(
+            t,
+            frequency,
+            true,
+            function()
+                n = n + 1
+                if (n % 1000 == 0) then
+                    print_mb("====== = >" .. types[type] .. n .. "次")
+                end
+                if (n > number) then
+                    htime.delTimer(t)
+                    print_mb("========" .. types[type] .. "测试结束，内存" .. collectgarbage("count") .. "========")
+                    cache = {}
+                    return
+                end
+                local x = math.random(0, 1000)
+                local y = math.random(0, 1000)
+                if (type == "var") then
+                    --测试全局/局部变量清空
+                    cache[n] = x + y
+                    var_text[n] = x + y
+                    var_text[n] = nil
+                elseif (type == "unit") then
+                    --测试创建单位，成绩：50W
+                    local u = cj.CreateUnit(
+                        henemy.getPlayer(),
+                        string.char2id("hfoo"),
+                        x,
+                        y,
+                        0
+                    )
+                    hunit.del(u, during)
+                    --测试创建单位2，成绩：23W
+                    --henemy.create({
+                    --    unitId = "hfoo",
+                    --    x = x,
+                    --    y = y,
+                    --    during = during,
+                    --})
+                elseif (type == "texttag") then
+                    --测试飘浮字，成绩：?W
+                    htextTag.create2XY(
+                        x, y,
+                        math.random(0, 100),
+                        math.random(5, 10),
+                        nil,
+                        1,
+                        during,
+                        math.random(0, 50)
+                    )
+                elseif (type == "ttgstyle") then
+                    --测试飘浮字，成绩：?W
+                    htextTag.style(
+                        htextTag.create2XY(
+                            x, y,
+                            math.random(0, 100),
+                            math.random(5, 10),
+                            nil,
+                            1,
+                            during,
+                            math.random(0, 50)
+                        ),
+                        'toggle',
+                        10,
+                        10
+                    )
+                elseif (type == "effect") then
+                    --测试特效，成绩：?W
+                    heffect.toXY(
+                        "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
+                        x, y,
+                        during
+                    )
+                elseif (type == "timer") then
+                    --测试计时器，成绩：?W
+                    --每个占用 0.1764KB 左右，上限不变则不再增加
+                    htime.setTimeout(math.random(1, 50), function(tt)
+                        htime.delTimer(tt)
+                    end)
+                end
+            end
+        )
+    end
 end)
 
 htime.setInterval(5.00, function()
