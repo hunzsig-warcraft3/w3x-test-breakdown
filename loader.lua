@@ -65,9 +65,9 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
         .. "\n->during:" .. during
         .. "\n->内存:" .. collectgarbage("count")
         .. "\n========")
-    local n = 0
-    local cache = {}
     for _ = 1, concurrent do
+        local n = 0
+        local cache = {}
         local t = cj.CreateTimer()
         cj.TimerStart(
             t,
