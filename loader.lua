@@ -93,21 +93,21 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                     var_text[n] = nil
                 elseif (type == "unit") then
                     --测试创建单位，成绩：50W
-                    local u = cj.CreateUnit(
-                        henemy.getPlayer(),
-                        string.char2id("hfoo"),
-                        x,
-                        y,
-                        0
-                    )
-                    hunit.del(u, during)
+                    --local u = cj.CreateUnit(
+                    --    henemy.getPlayer(),
+                    --    string.char2id("hfoo"),
+                    --    x,
+                    --    y,
+                    --    0
+                    --)
+                    --hunit.del(u, during)
                     --测试创建单位2，成绩：23W
-                    --henemy.create({
-                    --    unitId = "hfoo",
-                    --    x = x,
-                    --    y = y,
-                    --    during = during,
-                    --})
+                    henemy.create({
+                        unitId = "hfoo",
+                        x = x,
+                        y = y,
+                        during = during,
+                    })
                 elseif (type == "texttag") then
                     --测试飘浮字，成绩：?W
                     htextTag.create2XY(
