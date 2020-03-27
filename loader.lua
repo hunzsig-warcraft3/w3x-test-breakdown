@@ -101,8 +101,9 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                     --    0
                     --)
                     --hunit.del(u, during)
-                    --测试创建单位2，成绩：23W
+                    --测试创建单位2，成绩：29W
                     henemy.create({
+                        register = false,
                         unitId = "hfoo",
                         x = x,
                         y = y,
@@ -158,4 +159,7 @@ htime.setInterval(5.00, function()
     collectgarbage("collect")
     print_mb("========内存回收->" .. collectgarbage("count"))
     print_mb("========hRuntime.unit->" .. table.len(hRuntime.unit))
+    print_mb("========hRuntime.attr->" .. table.len(hRuntime.attribute))
+    print_mb("========hRuntime.item->" .. table.len(hRuntime.item))
+    print_r(henemy.numbers)
 end)
