@@ -92,7 +92,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                     var_text[n] = x + y
                     var_text[n] = nil
                 elseif (type == "unit") then
-                    --测试创建单位，成绩：50W
+                    --测试创建单位，成绩：50万
                     --local u = cj.CreateUnit(
                     --    henemy.getPlayer(),
                     --    string.char2id("hfoo"),
@@ -101,7 +101,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                     --    0
                     --)
                     --hunit.del(u, during)
-                    --测试创建单位2，成绩：83W
+                    --测试创建单位2，成绩：83万
                     henemy.create({
                         register = true,
                         unitId = "hfoo",
@@ -144,7 +144,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                         during
                     )
                 elseif (type == "timer") then
-                    --测试计时器，成绩：150W clear
+                    --测试计时器，成绩：150万 clear
                     --每个占用 0.1764KB 左右，上限不变则不再增加
                     htime.setTimeout(math.random(1, 50), function(tt)
                         htime.delTimer(tt)
