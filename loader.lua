@@ -87,7 +87,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                 local x = math.random(0, 1000)
                 local y = math.random(0, 1000)
                 if (type == "var") then
-                    --测试全局/局部变量清空
+                    --测试全局/局部变量清空，成绩：100万 clear
                     cache[n] = x + y
                     var_text[n] = x + y
                     var_text[n] = nil
@@ -110,7 +110,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                         during = during,
                     })
                 elseif (type == "texttag") then
-                    --测试飘浮字，成绩：?W
+                    --测试飘浮字，成绩：100万 clear
                     htextTag.create2XY(
                         x, y,
                         math.random(0, 100),
@@ -121,7 +121,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                         math.random(0, 50)
                     )
                 elseif (type == "ttgstyle") then
-                    --测试飘浮字，成绩：?W
+                    --测试飘浮字，成绩：100万 clear
                     htextTag.style(
                         htextTag.create2XY(
                             x, y,
@@ -137,14 +137,14 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                         10
                     )
                 elseif (type == "effect") then
-                    --测试特效，成绩：?W
+                    --测试特效，成绩：100万 clear
                     heffect.toXY(
                         "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
                         x, y,
                         during
                     )
                 elseif (type == "timer") then
-                    --测试计时器，成绩：?W
+                    --测试计时器，成绩：150W clear
                     --每个占用 0.1764KB 左右，上限不变则不再增加
                     htime.setTimeout(math.random(1, 50), function(tt)
                         htime.delTimer(tt)
