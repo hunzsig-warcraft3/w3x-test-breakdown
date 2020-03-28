@@ -92,7 +92,7 @@ hevent.onChat(hplayer.players[1], '-', false, function(evtData)
                     var_text[n] = x + y
                     var_text[n] = nil
                 elseif (type == "unit") then
-                    --测试创建单位，成绩：50万
+                    --测试创建单位，成绩：83万
                     --local u = cj.CreateUnit(
                     --    henemy.getPlayer(),
                     --    string.char2id("hfoo"),
