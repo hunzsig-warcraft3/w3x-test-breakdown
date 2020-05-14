@@ -1519,7 +1519,6 @@ CONST_PLAYER_COLOR = {
 CONST_EVENT = {
     attackDetect = "attackDetect",
     attackGetTarget = "attackGetTarget",
-    attackReady = "attackReady",
     beAttackReady = "beAttackReady",
     attack = "attack",
     beAttack = "beAttack",

@@ -2,8 +2,7 @@
 require "h-lua"
 
 -- 禁用迷雾
-cj.FogEnable(false)
-cj.FogMaskEnable(false)
+henv.setFogStatus(false, false)
 
 types = {
     var = "变量清空",
