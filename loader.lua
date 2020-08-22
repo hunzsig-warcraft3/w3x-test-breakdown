@@ -116,21 +116,15 @@ cj.TriggerAddAction(
                                 x = x,
                                 y = y,
                                 during = during,
-                                --attr = {
-                                --    life = "+" .. math.random(10, 100),
-                                --    attack_white = "+" .. math.random(50, 100),
-                                --    attack_speed = "+" .. math.random(10, 200),
-                                --    move = "+" .. math.random(1, 400),
-                                --}
                             })
-                            --for i = 0, 20 do
-                            --    hattr.set(e, i * 0.2, {
-                            --        life = "+1",
-                            --        attack_white = "+1",
-                            --        attack_speed = "+1",
-                            --        move = "+1",
-                            --    })
-                            --end
+                            for i = 0, 40 do
+                                hattr.set(e, i * 0.51, {
+                                    life = "+1",
+                                    attack_white = "+1",
+                                    attack_speed = "+1",
+                                    move = "+1",
+                                })
+                            end
                         elseif (type == "texttag") then
                             --测试飘浮字，成绩：100万 clear
                             htextTag.create2XY(
@@ -182,7 +176,6 @@ cj.TriggerAddAction(
         htime.setInterval(5.00, function()
             collectgarbage("collect")
             print_mb("========内存消耗->" .. (collectgarbage("count") - remStart))
-            print_r(hevent.POOL)
         end)
     end
 )
