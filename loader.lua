@@ -52,8 +52,8 @@ cj.TriggerAddAction(
             local chatOptions = string.explode(' ', chatString)
             local type = string.gsub(chatOptions[1] or "", "-", "")
             local concurrent = tonumber(chatOptions[2]) or 1
-            local frequency = tonumber(chatOptions[3]) or 0.01
-            local number = tonumber(chatOptions[4]) or 10000
+            local frequency = tonumber(chatOptions[3]) or 0.5
+            local number = tonumber(chatOptions[4]) or 1000
             local during = tonumber(chatOptions[5]) or 3
             if (type == "" or table.includes(type, {
                 "var",
@@ -117,7 +117,7 @@ cj.TriggerAddAction(
                                 y = y,
                                 during = during,
                             })
-                            for i = 0, 40 do
+                            for i = 0, 10 do
                                 hattr.set(e, i * 0.51, {
                                     life = "+1",
                                     attack_white = "+1",
