@@ -1,4 +1,5 @@
 -- 加载h-lua
+HLUA_DEBUG = true
 require "h-lua"
 
 local startTrigger = cj.CreateTrigger()
@@ -11,7 +12,7 @@ cj.TriggerAddAction(
         -- 禁用迷雾
         henv.setFogStatus(false, false)
 
-        types = {
+        local types = {
             var = "变量清空",
             unit = "创建单位",
             texttag = "创建飘浮字",
@@ -20,23 +21,9 @@ cj.TriggerAddAction(
             timer = "创建计时器",
         }
 
-        var_text = {}
+        local var_text = {}
 
-        print_r(hplayer.players)
-
-        henemy.setPlayers({
-            hplayer.players[2],
-            hplayer.players[3],
-            hplayer.players[4],
-            hplayer.players[5],
-            hplayer.players[6],
-            hplayer.players[7],
-            hplayer.players[8],
-            hplayer.players[9],
-            hplayer.players[10],
-            hplayer.players[11],
-            hplayer.players[12],
-        })
+        henemy.set("敌人", nil, { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 })
 
         --[[
             测试例子，进入游戏，敲入聊天信息
@@ -55,7 +42,7 @@ cj.TriggerAddAction(
             local frequency = tonumber(chatOptions[3]) or 0.5
             local number = tonumber(chatOptions[4]) or 1000
             local during = tonumber(chatOptions[5]) or 3
-            if (type == "" or table.includes(type, {
+            if (type == "" or table.includes({
                 "var",
                 "unit",
                 "texttag",
@@ -63,7 +50,7 @@ cj.TriggerAddAction(
                 "effect",
                 "timer",
                 "stop",
-            }) == false) then
+            }, type) == false) then
                 print_err('error:' .. type)
                 return
             end
