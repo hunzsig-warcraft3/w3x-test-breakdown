@@ -34,7 +34,7 @@ cj.TriggerAddAction(
             -effect [concurrent] [frequency] [number] [during]
             -timer [concurrent] [frequency] [number] [during]
         ]]
-        hevent.onChat(hplayer.players[1], '-', false, function(evtData)
+        hevent.onChat(hplayer.players[1], '-', function(evtData)
             local chatString = evtData.chatString
             local chatOptions = string.explode(' ', chatString)
             local type = string.gsub(chatOptions[1] or "", "-", "")
